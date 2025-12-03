@@ -127,6 +127,14 @@ def secant(
     epsilon: float,
     max_iters: int,
 ) -> tuple[float, int] | None:
+    if f(a) * f(b) > 0:
+        return None
+    for i in range(max_iters):
+        c = b - f(b) * (b - a) / (f(b) - f(a))
+        if abs(f(c)) <= epsilon:
+            return c, i + 1
+        a, b = b, c
+    return c, max_iters
     
     """funkcja aproksymująca rozwiązanie równania f(x) = 0 na przedziale [a,b] 
     metodą siecznych.
@@ -151,6 +159,8 @@ def secant(
 def difference_quotient(
     f: Callable[[float], float], x: int | float, h: int | float
 ) -> float | None:
+    
+    return (f(x+h) - f(x))/ h
     """Funkcja obliczająca wartość iloazu różnicowego w punkcie x dla zadanej 
     funkcji f(x).
 
@@ -177,6 +187,18 @@ def newton(
     epsilon: float,
     max_iter: int,
 ) -> tuple[float, int] | None:
+    
+    if f(a) * f(b) > 0:
+        return None
+    if f(b) > 0:
+        x0 = b
+    else:
+        x0 = a
+    for i in range(max_iter):
+        x0 = x0 - f(x0)/df(x0)
+        if abs(f(x0)) < epsilon:
+            return x0, i+1
+    return x0, max_iter
     """Funkcja aproksymująca rozwiązanie równania f(x) = 0 metodą Newtona.
 
     Args:
