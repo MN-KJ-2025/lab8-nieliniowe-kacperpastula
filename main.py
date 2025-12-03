@@ -86,6 +86,20 @@ def bisection(
     epsilon: float,
     max_iter: int,
 ) -> tuple[float, int] | None:
+    if f(a) * f(b) >= 0:
+        return None
+    
+    for n in range(max_iter):
+        c = (a + b) / 2
+
+        if abs(f(c)) < epsilon:
+            return c, n+1
+        elif f(c) < 0:
+            a = c
+        else:
+            b = c
+    return c, n+1
+
     """Funkcja aproksymująca rozwiązanie równania f(x) = 0 na przedziale [a,b] 
     metodą bisekcji.
 
@@ -113,6 +127,7 @@ def secant(
     epsilon: float,
     max_iters: int,
 ) -> tuple[float, int] | None:
+    
     """funkcja aproksymująca rozwiązanie równania f(x) = 0 na przedziale [a,b] 
     metodą siecznych.
 
