@@ -131,7 +131,7 @@ def secant(
         return None
     for i in range(max_iters):
         c = b - f(b) * (b - a) / (f(b) - f(a))
-        if abs(f(c)) <= epsilon:
+        if abs(f(c)) < epsilon:
             return c, i + 1
         a, b = b, c
     return c, max_iters
